@@ -46,3 +46,16 @@ maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.19'
+common:
+  - name: Sports Data Widgets Showcase | Data Sports Group
+    description: 'null'
+    url: https://datasportsgroup.com/sports-data-widgets-showcase/
+    type: Widgets
+  - name: none
+    description: 'null'
+    url: https://datasportsgroup.com/privacy-policy/
+    type: PrivacyPolicy
+  - name: Sports Data API Solutions, API XML Feed, JSON, Sports Statistic | DSG
+    description: 'null'
+    url: https://datasportsgroup.com/products-api/
+    type: Products
