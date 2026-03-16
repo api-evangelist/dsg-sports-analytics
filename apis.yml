@@ -46,7 +46,7 @@ common:
     type: Products
     description: 'null'
 created: '2025-03-01'
-modified: '2025-03-29'
+modified: '2026-03-16'
 position: Consumer
 description: >-
   DSG Sports Analytics is a leading sports data analysis company that
@@ -62,5 +62,5 @@ description: >-
   both on and off the field.
 maintainers:
   - FN: Kin Lane
-    email: info@apievangelist.com
+    email: kin@apievangelist.com
 specificationVersion: '0.19'
