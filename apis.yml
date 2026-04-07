@@ -5,9 +5,9 @@ apis:
   - aid: dsg-sports-analytics:dsg-sports-analytics
     name: DSG Sports Analytics API
     tags:
-      - Sports
-      - Insights
       - Analysis
+      - Insights
+      - Sports
     humanURL: ' https://datasportsgroup.com/products-api/'
     properties:
       - url: ' https://datasportsgroup.com/products-api/'
@@ -19,9 +19,9 @@ apis:
       data that can be used to make informed decisions and improve overall performance.
 name: DSG Sports Analytics
 tags:
-  - Sports
-  - Insights
   - Analysis
+  - Insights
+  - Sports
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
