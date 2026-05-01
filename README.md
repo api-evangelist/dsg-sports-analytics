@@ -1,48 +1,53 @@
 # DSG Sports Analytics (dsg-sports-analytics)
-DSG Sports Analytics is a leading sports data analysis company that specializes in providing comprehensive insights and solutions for professional sports teams, athletes, and organizations. Using advanced statistical models and cutting-edge technology, DSG Sports Analytics collects, processes, and interprets vast amounts of data to help clients optimize performance, enhance strategic decision-making, and gain a competitive edge in the sports industry. With a team of experienced analysts and experts, DSG Sports Analytics offers a wide range of services, including player evaluation, game strategy development, injury prevention, and fan engagement. By harnessing the power of data-driven insights, DSG Sports Analytics empowers clients to achieve success both on and off the field.
+
+DSG Sports Analytics, operated by Data Sports Group, is a sports data provider offering live scores, statistics, historical data, fixtures, player and team information, and odds across more than 80 sports including soccer, basketball, American football, cricket, tennis, ice hockey, e-sports, and Olympic disciplines. The DSG Sports Data API delivers this content in JSON and XML over HTTPS using credential-based authentication.
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/dsg-sports-analytics/refs/heads/main/apis.yml)
 
 ## Scope
 
-- **Type:** Index 
-- **Position:** Consumer 
-- **Access:** 3rd-Party 
+- **Type:** Index
+- **Position:** Consumer
+- **Access:** 3rd-Party
 
 ## Tags:
 
- - Sports, Insights, Analysis
+ - Analysis, Insights, Sports, Sports Data, Live Scores, Statistics
 
 ## Timestamps
 
-- **Created:** 2025-03-01 
-- **Modified:** 2025-03-29 
+- **Created:** 2025-03-01
+- **Modified:** 2026-04-28
 
 ## APIs
 
-### DSG Sports Analytics API
-The DSG Sports Analytics API is a comprehensive tool that provides valuable insights and data for sports enthusiasts, teams, and organizations. This API enables users to access real-time statistics, game analysis, and player performance data that can be used to make informed decisions and improve overall performance. With its user-friendly interface and customizable features, the DSG Sports Analytics API allows users to track key metrics, create reports, and gain a competitive edge in the world of sports analytics. Whether you are a professional team looking to enhance training routines or a fantasy sports enthusiast seeking to gain an edge in your league, the DSG Sports Analytics API has everything you need to stay ahead of the game.
+### DSG Sports Data API
+The DSG Sports Data API exposes live scores, statistics, historical data, player and team information, fixtures, results, and odds across 80-plus sports through a per-sport documentation tree at dsg-api.com. Operations follow a get_* convention (for example get_areas, get_competitions, get_matches, get_tables, get_teams, get_peoples, get_news, get_odds) and responses are available in JSON and XML.
 
-**Human URL:** [ https://datasportsgroup.com/products-api/]( https://datasportsgroup.com/products-api/)
+**Human URL:** [https://datasportsgroup.com/products-api/](https://datasportsgroup.com/products-api/)
 
+**Base URL:** https://dsg-api.com
 
 #### Tags:
 
- - Sports, Insights, Analysis
+ - Sports Data, Live Scores, Statistics, Fixtures, Odds
 
 #### Properties
 
-- [Documentation]( https://datasportsgroup.com/products-api/)
+- [Documentation](https://datasportsgroup.com/products-api/)
+- [APIReference](https://dsg-api.com/)
+- [Login](https://dsg-api.com/login/)
 
 ## Common Properties
 
+- [Website](https://datasportsgroup.com/)
+- [Products](https://datasportsgroup.com/products-api/)
 - [Widgets](https://datasportsgroup.com/sports-data-widgets-showcase/)
 - [PrivacyPolicy](https://datasportsgroup.com/privacy-policy/)
-- [Products](https://datasportsgroup.com/products-api/)
+- [APIReference](https://dsg-api.com/)
 
 ## Maintainers
 
 **FN:** Kin Lane
 
-**Email:** info@apievangelist.com
-
+**Email:** kin@apievangelist.com
