@@ -49,6 +49,8 @@ apis:
       get_matches, get_tables, get_teams, get_peoples, get_news, get_odds) and
       responses are available in JSON and XML.
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/data-sports-group
   - type: Website
     url: https://datasportsgroup.com/
   - type: Products
