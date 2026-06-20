@@ -8,7 +8,7 @@ description: >-
   Olympic disciplines. The DSG Sports Data API delivers this content in JSON
   and XML over HTTPS using credential-based authentication.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Analysis
   - Insights
