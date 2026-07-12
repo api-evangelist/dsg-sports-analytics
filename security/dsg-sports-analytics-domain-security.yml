@@ -1,0 +1,26 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: datasportsgroup.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  2 21:09:48 2026 GMT
+  hsts: false
+- host: dsg-api.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Mar 28 16:26:16 2027 GMT
+  hsts: false
+domains:
+- domain: datasportsgroup.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: dsg-api.com
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false
