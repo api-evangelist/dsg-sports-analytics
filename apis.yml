@@ -8,6 +8,17 @@ description: >-
   Olympic disciplines. The DSG Sports Data API delivers this content in JSON
   and XML over HTTPS using credential-based authentication.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
