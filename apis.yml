@@ -42,7 +42,7 @@ tags:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/dsg-sports-analytics/refs/heads/main/apis.yml
 created: '2025-03-01'
-modified: '2026-04-28'
+modified: '2026-09-06'
 specificationVersion: '0.23'
 position: Consuming
 access: 3rd-Party
@@ -62,6 +62,26 @@ apis:
         url: https://datasportsgroup.com/products-api/
       - type: APIReference
         url: https://dsg-api.com/
+      - type: DeveloperPortal
+        url: https://dsg-api.com/
+      - type: GettingStarted
+        url: https://dsg-api.com/introduction/
+      - type: Authentication
+        url: authentication/dsg-sports-analytics-authentication.yml
+      - type: Conventions
+        url: conventions/dsg-sports-analytics-conventions.yml
+      - type: ErrorCatalog
+        url: errors/dsg-sports-analytics-problem-types.yml
+      - type: DataModel
+        url: data-model/dsg-sports-analytics-data-model.yml
+      - type: RateLimits
+        url: rate-limits/dsg-sports-analytics-rate-limits.yml
+      - type: Lifecycle
+        url: lifecycle/dsg-sports-analytics-lifecycle.yml
+      - type: Conformance
+        url: conformance/dsg-sports-analytics-conformance.yml
+      - type: X-MCPServerCandidate
+        url: mcp/dsg-sports-analytics-mcp.yml
       - type: Login
         url: https://dsg-api.com/login/
     description: >-
@@ -88,6 +108,41 @@ common:
     url: https://dsg-api.com/
   - type: Blog
     url: https://datasportsgroup.com/news-press/
+  - type: Twitter
+    url: https://twitter.com/datasportsgroup
+  - type: Support
+    url: https://datasportsgroup.com/contact/
+  - type: TermsOfService
+    url: https://datasportsgroup.com/imprint/
+  - type: Authentication
+    url: authentication/dsg-sports-analytics-authentication.yml
+  - type: Conventions
+    url: conventions/dsg-sports-analytics-conventions.yml
+  - type: ErrorCatalog
+    url: errors/dsg-sports-analytics-problem-types.yml
+  - type: DataModel
+    url: data-model/dsg-sports-analytics-data-model.yml
+  - type: RateLimits
+    url: rate-limits/dsg-sports-analytics-rate-limits.yml
+  - type: Plans
+    url: plans/dsg-sports-analytics-plans-pricing.yml
+  - type: Lifecycle
+    url: lifecycle/dsg-sports-analytics-lifecycle.yml
+  - type: Conformance
+    url: conformance/dsg-sports-analytics-conformance.yml
+  - type: Components
+    url: components/dsg-sports-analytics-components.yml
+  - type: Packages
+    url: packages/dsg-sports-analytics-packages.yml
+  - type: X-MCPServerCandidate
+    url: mcp/dsg-sports-analytics-mcp.yml
+  - type: LLMsTxt
+    url: llms/dsg-sports-analytics-llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-06'
+  status: enriched
+  artifacts_added: 11
+  pass: local-v3

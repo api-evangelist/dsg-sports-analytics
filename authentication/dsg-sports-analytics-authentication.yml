@@ -1,0 +1,69 @@
+generated: '2026-09-06'
+method: searched
+source: https://dsg-api.com/introduction/
+docs: https://dsg-api.com/introduction/
+note: >-
+  Derived from the provider's own published API reference, not from an OpenAPI document - DSG
+  publishes no machine-readable contract. The introduction page describes what it calls "3 security
+  layers"; the per-operation doc pages (e.g. https://dsg-api.com/doc/soccer/get_matches/1/) confirm
+  the two credential parameters are carried in the query string of every request.
+summary:
+  types:
+    - apiKey
+  api_key_in:
+    - query
+  oauth2_flows: []
+  oauth2: false
+  openid_connect: false
+  mutual_tls: false
+  transport: https-only
+schemes:
+  - name: client
+    type: apiKey
+    in: query
+    parameter: client
+    required: true
+    description: Unique client ID issued by DSG with the account. Also appears as a path segment in
+      the request URL (/clients/{client_name}/...).
+    sources:
+      - https://dsg-api.com/doc/soccer/get_matches/1/
+  - name: authkey
+    type: apiKey
+    in: query
+    parameter: authkey
+    required: true
+    description: Client authentication key issued with the account. DSG's docs state it "should not
+      be shared or visible in code".
+    sources:
+      - https://dsg-api.com/introduction/
+      - https://dsg-api.com/doc/soccer/get_matches/1/
+layers:
+  - layer: 1
+    mechanism: api-key-in-url
+    description: Every client receives an authentication key with their account which must be used in
+      the API URL.
+  - layer: 2
+    mechanism: account-password
+    description: A password protecting the API account, passed separately from the API URL, so a
+      leaked API URL alone cannot be used.
+    note: The docs describe this layer but do not publish where or how the password is transmitted on
+      an API call; it is documented as an account-level protection.
+  - layer: 3
+    mechanism: domain-allowlist
+    description: DSG allowlists access to API accounts and to their images per domain.
+credential_issuance:
+  self_service: false
+  registration_url: https://dsg-api.com/register/
+  registration_status: >-
+    The /register/ page resolves HTTP 200 but renders no signup form, and the "Sign up" button is
+    commented out of the site header. The products page states credentials are issued by the DSG
+    team ("you will receive personalized login credentials from our team"), so onboarding is
+    sales-mediated.
+  login_url: https://dsg-api.com/login/
+  contact: sales@datasportsgroup.com
+transport:
+  https_required: true
+  note: The docs list "Connection refused - most likely cause is not using HTTPS" as a failure mode.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

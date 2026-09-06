@@ -1,0 +1,174 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  Derived from the "Nodes" reference DSG publishes on each operation documentation page. Twelve soccer
+  operation pages were read in full and their documented node trees and id-reference fields
+  reconciled. There is no OpenAPI to derive from; every entity and every field named below appears in
+  DSG's own published node documentation.
+docs:
+  - https://dsg-api.com/doc/soccer/get_areas/3/
+  - https://dsg-api.com/doc/soccer/get_competitions/16/
+  - https://dsg-api.com/doc/soccer/get_seasons/4/
+  - https://dsg-api.com/doc/soccer/get_matches/1/
+  - https://dsg-api.com/doc/soccer/get_team/8/
+  - https://dsg-api.com/doc/soccer/get_peoples/12/
+  - https://dsg-api.com/doc/soccer/get_squad/11/
+  - https://dsg-api.com/doc/soccer/get_tables/2/
+  - https://dsg-api.com/doc/soccer/get_venue/10/
+  - https://dsg-api.com/doc/soccer/get_odds/1364/
+  - https://dsg-api.com/doc/soccer/get_news/194/
+scope_note: >-
+  The node vocabulary is per sport. Soccer is the most fully documented sport and is the basis for this
+  model; other sports share the core spine (area, competition, season, round, match, team, people,
+  venue) and add their own leaves - esports adds heroes/items/runes/operators, baseball adds
+  batter_vs_pitcher, motorsport and cycling add tour/tour_season, Olympic disciplines add medals. Only
+  what was read is recorded.
+envelope:
+  node: datasportsgroup
+  description: Every response is wrapped in a <datasportsgroup> node carrying call metadata.
+  fields:
+    - {name: version, description: version of the API}
+    - {name: sport, description: sport value}
+    - {name: lang, description: language of the API call}
+    - {name: generated_utc, description: UTC timestamp when the API output was generated}
+  sibling_node:
+    name: method
+    fields: [method_id, name]
+    description: identifies which documented operation produced the response
+entities:
+  - name: area
+    id_field: area_id
+    description: World, continents and countries - the geographic spine competitions hang from.
+    fields: [area_id, name, country_code, iso_code, parent_area_id]
+    self_reference: parent_area_id
+    source_operation: get_areas
+  - name: competition
+    id_field: competition_id
+    description: A league, cup or tournament within an area.
+    fields: [competition_id, name, area_id, area_name, format, gender, type, last_updated]
+    enums:
+      format: [domestic_league, domestic_cup, domestic_league_cup, domestic_super_cup, international_cup,
+        international_super_cup, playoff, tournament, race, unofficial]
+      type: [club, international]
+      gender: [male, female]
+    source_operation: get_competitions
+  - name: season
+    id_field: season_id
+    description: One edition of a competition.
+    fields: [season_id, title, original_name, start_date, end_date, logo, last_updated]
+    source_operation: get_seasons
+  - name: round
+    id_field: round_id
+    description: A stage or matchday within a season.
+    source_operation: get_matches
+  - name: conference
+    id_field: conference_id
+    description: A sub-grouping within a season used for standings (chiefly US sports).
+    fields: [conference_id, conference_name]
+    source_operation: get_tables
+  - name: match
+    id_field: match_id
+    description: A single fixture with its result, participants and related events.
+    fields: [match_id, date, date_utc, status, score_a, score_b, final_period, team_a_id, team_a_name,
+      team_a_short_name, team_a_tla_name, team_a_original_name, team_a_area_id, team_a_area_name,
+      team_a_area_code, team_b_id, team_b_name, team_b_area_id, last_updated]
+    source_operation: get_matches
+  - name: team
+    id_field: team_id
+    description: A club or national team.
+    fields: [team_id, team_area_id, primary_venue_id, next_match_id, next_opponent_team_id]
+    source_operation: get_team
+  - name: people
+    id_field: people_id
+    description: A player, coach or referee - one entity type covers all three roles.
+    fields: [people_id, first_name, last_name, common_name, gender, age, height, nationality,
+      nationality_area_id, country_of_birth, country_of_birth_area_id, place_of_birth, date_of_death,
+      people_picture, membership_id, last_updated]
+    source_operation: get_peoples
+  - name: venue
+    id_field: venue_id
+    description: A stadium or ground.
+    fields: [venue_id, name, nicknames, address, address_zip, city_id, city_name, area_id, area_name,
+      capacity, surface, opened, status, geo_latitude, geo_longtitude, last_updated]
+    source_operation: get_venue
+  - name: discipline
+    id_field: discipline_id
+    description: A discipline within a sport.
+    fields: [discipline_id, name, type]
+    enums:
+      type: [contestant, contestant_team, team]
+    source_operation: get_matches
+  - name: membership
+    id_field: membership_id
+    description: The join entity binding a person to a team for a period - the reason people and team
+      are not directly related.
+    source_operation: get_peoples
+  - name: event
+    id_field: event_id
+    description: An in-match occurrence attributed to a person (goal, card, substitution).
+    fields: [event_id, minute, membership_id, common_name, first_name, last_name]
+    source_operation: get_matches
+  - name: table
+    description: A standings table for a season or round; rendered through list/row nodes.
+    source_operation: get_tables
+  - name: odd
+    description: Betting odds attached to a match, expressed as offer and outcome nodes.
+    fields: [bookmaker_id, offer_type_id, offer_subtype_id]
+    source_operation: get_odds
+  - name: news_article
+    id_field: news_id
+    description: An editorial article, optionally tagged to entities.
+    fields: [news_id, title, teaser, timestamp, news_image, news_image_credit]
+    source_operation: get_news
+  - name: tour
+    id_field: tour_id
+    description: A tour and its seasons (tour_season_id) - used by cycling, motorsport, golf and tennis.
+    source_operation: get_matches
+relationships:
+  - {from: area, type: has_many, to: area, via: parent_area_id, note: areas nest world > continent > country}
+  - {from: competition, type: belongs_to, to: area, via: area_id}
+  - {from: season, type: belongs_to, to: competition, via: competition_id}
+  - {from: round, type: belongs_to, to: season, via: season_id}
+  - {from: conference, type: belongs_to, to: season, via: season_id}
+  - {from: match, type: belongs_to, to: round, via: round_id}
+  - {from: match, type: belongs_to, to: season, via: season_id}
+  - {from: match, type: has_one, to: team, via: team_a_id, note: home/first participant}
+  - {from: match, type: has_one, to: team, via: team_b_id, note: away/second participant}
+  - {from: match, type: has_one, to: venue, via: venue_id}
+  - {from: match, type: has_many, to: event, via: match_id}
+  - {from: event, type: belongs_to, to: membership, via: membership_id, note: an event is attributed to
+      a person-in-a-team, not to a person directly}
+  - {from: membership, type: belongs_to, to: people, via: people_id}
+  - {from: membership, type: belongs_to, to: team, via: team_id}
+  - {from: team, type: belongs_to, to: area, via: team_area_id}
+  - {from: team, type: has_one, to: venue, via: primary_venue_id}
+  - {from: team, type: has_one, to: match, via: next_match_id, note: forward pointer to the next fixture}
+  - {from: team, type: has_one, to: team, via: next_opponent_team_id}
+  - {from: people, type: belongs_to, to: area, via: nationality_area_id}
+  - {from: people, type: belongs_to, to: area, via: country_of_birth_area_id}
+  - {from: venue, type: belongs_to, to: area, via: area_id}
+  - {from: table, type: belongs_to, to: season, via: season_id}
+  - {from: odd, type: belongs_to, to: match, via: match_id}
+  - {from: news_article, type: has_many, to: tag, via: value_id, note: tags carry a type plus a
+      value_id pointing at the tagged entity}
+  - {from: match, type: belongs_to, to: discipline, via: discipline_id}
+id_fields_observed: [area_id, bookmaker_id, city_id, comp_area_id, competition_id, conference_id,
+  country_of_birth_area_id, discipline_id, event_id, match_id, membership_id, method_id,
+  nationality_area_id, news_id, next_match_id, next_opponent_team_id, offer_subtype_id, offer_type_id,
+  parent_area_id, people_id, primary_venue_id, round_id, season_id, team_a_area_id, team_a_id,
+  team_area_id, team_b_area_id, team_b_id, team_id, tour_id, tour_season_id, value_id, venue_area_id,
+  venue_id, winner_team_id, zone_id]
+conventions:
+  id_style: >-
+    Bare integers scoped by field name (area_id, match_id). There are no prefixed or globally unique
+    ids, so an id is only meaningful together with its field, and ids are NOT unique across sports -
+    the sport is part of the request path, not of the identifier.
+  freshness: >-
+    Most entity nodes carry `last_updated`, documented as "When record was last updated. Format
+    YYYY-MM-DD HH:MM:SS in CET timezone."
+  extension_nodes: >-
+    Several entities have a paired *_extra node (match_extra, round_extra, people_extra, team_extra,
+    event_extra) holding sport- or subscription-specific attributes alongside the core node.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

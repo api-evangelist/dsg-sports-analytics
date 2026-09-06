@@ -67,10 +67,24 @@ domains:
       - Invoicing and Chargeback
       - Onboarding Workloads
       - Intersecting Disciplines
+# Corrected 2026-09-06 by the enrichment pipeline. The values below were scaffold defaults
+# (Usage-Based / Monthly / USD) that DSG's own site contradicts: pricing is sales-quoted, the
+# unit of sale is entitlement (which sports and competitions an account may call) rather than
+# request volume, and the company is a German GmbH. Nothing about DSG's billing is published,
+# so the fields are now null with the absence recorded. See
+# plans/dsg-sports-analytics-plans-pricing.yml.
+billingModelNote: >-
+  Not published. https://datasportsgroup.com/products-api/ states "Pricing for our Sports Data API
+  is variable and depends on several factors, including the specific sports you select, the number
+  of competitions you require, and your choice of data pack. To get detailed pricing information
+  tailored to your needs, please reach out to our sales team." No pricing category, billing
+  frequency, currency or metered unit is public. The meters and FOCUS column mappings below are an
+  API Evangelist FinOps FRAMEWORK TEMPLATE for reasoning about this kind of API - they are not DSG's
+  billing model and must not be read as one.
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
-  billingCurrency: USD
+  pricingCategory: null
+  billingFrequency: null
+  billingCurrency: null
   chargeCategories:
     - Usage
     - Purchase
@@ -84,9 +98,9 @@ focusColumns:
   ProviderName: DSG Sports Analytics
   PublisherName: DSG Sports Analytics
   InvoiceIssuerName: DSG Sports Analytics
-  PricingCategory: Usage-Based
-  PricingUnit: request
-  BillingCurrency: USD
+  PricingCategory: null
+  PricingUnit: null
+  BillingCurrency: null
   ChargeCategory: Usage
 meters:
   - name: api_requests

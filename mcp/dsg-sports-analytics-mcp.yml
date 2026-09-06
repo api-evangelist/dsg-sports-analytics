@@ -1,0 +1,450 @@
+generated: '2026-09-06'
+method: derived
+status: candidate
+source: https://dsg-api.com/ (documentation index) and the twelve soccer operation pages listed in data-model/dsg-sports-analytics-data-model.yml
+note: NOBODY SHIPS AN MCP SERVER FOR THIS API. This is a candidate tool list derived from DSG's own published
+  operation documentation, not a description of anything DSG operates. Searched the docs, the marketing
+  site, npm and the public web for a DSG MCP server on 2026-09-06 and found none; POSTing tools/list to
+  https://dsg-api.com/mcp returns the HTML documentation shell, and mcp.datasportsgroup.com does not resolve
+  to a certificate for that name. No endpoint is invented below.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: derived
+  note: 'mode: none - DSG publishes neither a remote MCP endpoint nor a stdio package. auth is recorded
+    as api-key because that is what the underlying API requires (client + authkey query parameters); it
+    is not a claim about an MCP server, because there is no server.'
+server:
+  name: null
+  transport: null
+  url: null
+surface_summary:
+  sports_documented: 85
+  operations_documented: 1607
+  operation_families: 46
+  all_read_only: true
+  note: Each family is documented separately per sport, so a faithful MCP server would most likely expose
+    one tool per family with `sport` as a parameter (46 tools) rather than one tool per documented page
+    (1,607 tools). The families are listed once each below with the number of sports each is documented
+    for.
+common_parameters:
+- name: client
+  required: true
+  description: unique client ID
+- name: authkey
+  required: true
+  description: client authentification key
+- name: ftype
+  required: false
+  description: changes feed type from XML to json (ftype=json or ftype=json_array)
+- name: lang
+  required: false
+  description: two-character language code, defaults to 'en'
+tools:
+- name: get_areas
+  sports_documented: 85
+  documented_operations: 85
+  source_documentation: https://dsg-api.com/doc/{sport}/get_areas/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_areas?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns all areas, which can be 'world', continents and countries.
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_competitions
+  sports_documented: 85
+  documented_operations: 85
+  source_documentation: https://dsg-api.com/doc/{sport}/get_competitions/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_competitions?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns all competitions from an area.
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_contestants
+  sports_documented: 85
+  documented_operations: 85
+  source_documentation: https://dsg-api.com/doc/{sport}/get_contestants/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_contestants?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_disciplines
+  sports_documented: 85
+  documented_operations: 85
+  source_documentation: https://dsg-api.com/doc/{sport}/get_disciplines/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_disciplines?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_medals
+  sports_documented: 85
+  documented_operations: 85
+  source_documentation: https://dsg-api.com/doc/{sport}/get_medals/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_medals?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_news
+  sports_documented: 85
+  documented_operations: 85
+  source_documentation: https://dsg-api.com/doc/{sport}/get_news/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_news?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns news articles you are subscribed to.
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_seasons
+  sports_documented: 85
+  documented_operations: 85
+  source_documentation: https://dsg-api.com/doc/{sport}/get_seasons/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_seasons?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns all (authorized) seasons (that have been recently updated).
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_deleted
+  sports_documented: 84
+  documented_operations: 84
+  source_documentation: https://dsg-api.com/doc/{sport}/get_deleted/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_deleted?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns a list of deleted rounds, teams, players, matches etc.
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_odds
+  sports_documented: 84
+  documented_operations: 84
+  source_documentation: https://dsg-api.com/doc/{sport}/get_odds/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_odds?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns odds for matches that belong to a season, round or match.
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_peoples_updates
+  sports_documented: 84
+  documented_operations: 84
+  source_documentation: https://dsg-api.com/doc/{sport}/get_peoples_updates/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_peoples_updates?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_rounds
+  sports_documented: 84
+  documented_operations: 84
+  source_documentation: https://dsg-api.com/doc/{sport}/get_rounds/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_rounds?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_peoples
+  sports_documented: 83
+  documented_operations: 83
+  source_documentation: https://dsg-api.com/doc/{sport}/get_peoples/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_peoples?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns person informations and list of teams the person were member of.
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_venue
+  sports_documented: 82
+  documented_operations: 82
+  source_documentation: https://dsg-api.com/doc/{sport}/get_venue/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_venue?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns list of details for certain venues.
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_matches_updates
+  sports_documented: 52
+  documented_operations: 52
+  source_documentation: https://dsg-api.com/doc/{sport}/get_matches_updates/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_matches_updates?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_matches
+  sports_documented: 50
+  documented_operations: 50
+  source_documentation: https://dsg-api.com/doc/{sport}/get_matches/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_matches?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns all matches (and related events) that belong to a season, round or match.
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_head2head
+  sports_documented: 47
+  documented_operations: 47
+  source_documentation: https://dsg-api.com/doc/{sport}/get_head2head/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_head2head?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_matches_day
+  sports_documented: 47
+  documented_operations: 47
+  source_documentation: https://dsg-api.com/doc/{sport}/get_matches_day/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_matches_day?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_tables
+  sports_documented: 42
+  documented_operations: 42
+  source_documentation: https://dsg-api.com/doc/{sport}/get_tables/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_tables?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns the league, home & away tables per season or round.
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_calendar
+  sports_documented: 42
+  documented_operations: 42
+  source_documentation: https://dsg-api.com/doc/{sport}/get_calendar/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_calendar?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_tours
+  sports_documented: 41
+  documented_operations: 41
+  source_documentation: https://dsg-api.com/doc/{sport}/get_tours/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_tours?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_team
+  sports_documented: 40
+  documented_operations: 40
+  source_documentation: https://dsg-api.com/doc/{sport}/get_team/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_team?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns a list of team details selected from team or season.
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_results
+  sports_documented: 38
+  documented_operations: 38
+  source_documentation: https://dsg-api.com/doc/{sport}/get_results/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_results?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_squad
+  sports_documented: 27
+  documented_operations: 27
+  source_documentation: https://dsg-api.com/doc/{sport}/get_squad/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_squad?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns a list of players linked to a team.
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_trophies
+  sports_documented: 26
+  documented_operations: 26
+  source_documentation: https://dsg-api.com/doc/{sport}/get_trophies/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_trophies?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_rankings
+  sports_documented: 20
+  documented_operations: 20
+  source_documentation: https://dsg-api.com/doc/{sport}/get_rankings/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_rankings?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_season_venue
+  sports_documented: 15
+  documented_operations: 15
+  source_documentation: https://dsg-api.com/doc/{sport}/get_season_venue/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_season_venue?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_player_rankings
+  sports_documented: 4
+  documented_operations: 4
+  source_documentation: https://dsg-api.com/doc/{sport}/get_player_rankings/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_player_rankings?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_season_team
+  sports_documented: 2
+  documented_operations: 2
+  source_documentation: https://dsg-api.com/doc/{sport}/get_season_team/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_season_team?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_drafts
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_drafts/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_drafts?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_batter_vs_pitcher
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_batter_vs_pitcher/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_batter_vs_pitcher?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_championships
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_championships/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_championships?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_standings
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_standings/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_standings?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_facts
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_facts/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_facts?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_news_rss
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_news_rss/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_news_rss?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: Returns news articles you are subscribed to, as a feed.
+  description_source: verbatim from the DSG operation documentation page read for soccer
+- name: get_people_vs_opponent
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_people_vs_opponent/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_people_vs_opponent?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_players_abroad
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_players_abroad/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_players_abroad?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_team_h2h
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_team_h2h/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_team_h2h?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_transfers
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_transfers/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_transfers?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_videos
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_videos/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_videos?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_world_rankings
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_world_rankings/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_world_rankings?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_champions
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_champions/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_champions?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_items
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_items/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_items?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_runes
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_runes/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_runes?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_heroes
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_heroes/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_heroes?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_operators
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_operators/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_operators?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+- name: get_records
+  sports_documented: 1
+  documented_operations: 1
+  source_documentation: https://dsg-api.com/doc/{sport}/get_records/
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/get_records?client={client_name}&authkey={client_authkey}
+  read_only: true
+  description: null
+  description_source: not read - this operation family was counted from the documentation index but its
+    own page was not fetched, so no description is asserted
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

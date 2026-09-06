@@ -1,0 +1,116 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  Derived from the DSG published API reference at https://dsg-api.com/introduction/ and its operation
+  pages. There is no OpenAPI, AsyncAPI, JSON Schema or WSDL to test against, so every assertion below
+  is read off documentation and every negative is an observed absence in that documentation, not an
+  untested assumption.
+note: >-
+  Nothing here is a compliance claim by DSG. No `Compliance` pointer is emitted in apis.yml, because
+  DSG publishes no certifications, no trust centre and no compliance programme - see
+  security/dsg-sports-analytics-trust-center probe result (no hit) in provenance.
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      Authentication is two API-key query parameters (client, authkey) plus an account password and a
+      per-domain allowlist. No authorization server, no token endpoint, no /.well-known/
+      oauth-authorization-server (404 on every host probed).
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration returned 404 on all six hosts probed 2026-09-06.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors are bare HTTP status codes documented in a table; the response body is XML or JSON in the
+      caller's negotiated format. No application/problem+json anywhere in the reference.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No deprecation or sunset policy or header is documented.
+  - id: rfc9331-ratelimit-headers
+    conforms: false
+    evidence: >-
+      A numeric threshold (10,000 calls/hour) is published in prose on every operation page, but no
+      RateLimit-* or X-RateLimit-* response header is documented. Exhaustion is signalled with a 429
+      and an in-band XML/JSON message.
+  - id: idempotency-key
+    conforms: na
+    evidence: >-
+      Read-only surface - all 1,607 documented operations are GET. There is no mutating request for an
+      idempotency key to protect.
+  - id: pagination
+    conforms: false
+    evidence: >-
+      No page, offset, limit or cursor parameter appears on any operation page examined. Result sets
+      are bounded by required selectors (type + id, comp_id, team, season) instead.
+  - id: openapi
+    conforms: false
+    evidence: >-
+      Probed /openapi.json, /openapi.yaml, /swagger.json, /v1/openapi.json, /api-docs, /docs and
+      /redoc on dsg-api.com, datasportsgroup.com and www.datasportsgroup.com on 2026-09-06. Every
+      response was either a 404 or the HTML documentation shell; none parsed as OpenAPI or Swagger.
+  - id: asyncapi
+    conforms: false
+    evidence: >-
+      No event surface exists to describe. DSG's change feed is pull-only (get_matches_updates,
+      get_peoples_updates, get_deleted); no webhooks, no streaming endpoint, no AsyncAPI document.
+  - id: graphql
+    conforms: false
+    evidence: No /graphql surface is documented or reachable.
+  - id: grpc
+    conforms: false
+    evidence: No .proto is published; no GitHub organisation for this company was found.
+  - id: soap-wsdl
+    conforms: false
+    evidence: >-
+      Probed ?wsdl, ?singleWsdl and /soap?wsdl on dsg-api.com 2026-09-06 - each returned the HTML
+      documentation shell, not a WSDL document.
+  - id: json
+    conforms: true
+    evidence: >-
+      JSON is an optional response format selected with ftype=json or ftype=json_array
+      (https://dsg-api.com/introduction/). XML is the default.
+  - id: xml
+    conforms: true
+    evidence: XML is the default response format for every operation.
+  - id: rss
+    conforms: partial
+    evidence: >-
+      One operation family, get_news_rss, is documented for soccer only
+      (https://dsg-api.com/doc/soccer/get_news_rss/743/) and is marked v2. It is the single feed-shaped
+      surface in the API; the RSS profile it emits is not published.
+  - id: iso-3166
+    conforms: partial
+    evidence: >-
+      The `area` node documents `country_code` and `iso_code` fields
+      (https://dsg-api.com/doc/soccer/get_areas/3/). The docs do not name a standard for them, so the
+      binding to ISO 3166 is inferred from the field names and is marked partial rather than asserted.
+  - id: iso-8601
+    conforms: partial
+    evidence: >-
+      Dates are documented as 'yyyy-mm-dd' and timestamps as 'yyyy-mm-dd hh:mm:ss' - ISO-8601-shaped
+      date parts, but the timestamp form uses a space separator rather than T and carries no offset.
+      Timezone is CET by convention with parallel *_utc fields, which is a house convention, not the
+      standard.
+domain_standards:
+  market: sports data
+  assessment: >-
+    No domain standard is declared by this contract, and none is recorded as conformant. Sports data
+    has no broadly adopted machine-readable interchange standard comparable to FHIR in health, SCIM in
+    identity or ISO 20022 in payments. The nearest analogues are commercial vendor schemas (Opta/Stats
+    Perform F-feeds, Sportradar's Unified Feed) which are proprietary rather than open standards, and
+    DSG's response vocabulary (area / competition / season / round / match / team / people / venue) is
+    its own. This is a reward-only dimension and no conformance is invented to fill it.
+  candidates_checked:
+    - id: opta-f-feeds
+      conforms: false
+      evidence: Proprietary competitor schema; DSG's nodes do not use it and the docs never mention it.
+    - id: openrtb
+      conforms: false
+      evidence: >-
+        Checked because DSG serves betting operators (get_odds is documented on 84 sports, with
+        bookmaker_id, offer_type_id and outcome nodes). The odds surface is a data feed, not an
+        auction/bid interface, and declares no OpenRTB shape.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

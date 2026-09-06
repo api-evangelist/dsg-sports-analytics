@@ -1,0 +1,71 @@
+generated: '2026-09-06'
+method: searched
+source: https://datasportsgroup.com/sports-data-widgets-showcase/
+docs: https://datasportsgroup.com/sports-data-widgets-showcase/
+note: >-
+  DSG sells an embeddable presentation layer alongside the data API. This is a real second product
+  surface and is distinct from packages/ (there are no client SDKs). It is catalogued here as an
+  embeddable-component family, not as an SDK.
+delivery:
+  model: hosted embed
+  hosts:
+    - host: widgets.datasportsgroup.com
+      status: 403
+      note: >-
+        Named as the widget origin in the showcase page markup. Returns HTTP 403 Forbidden to an
+        anonymous request at its root - the embed surface is served to licensed customer domains, which
+        is consistent with DSG's layer-3 per-domain allowlist described in
+        authentication/dsg-sports-analytics-authentication.yml.
+    - host: dsg-widgets.com
+      status: 200
+      note: Resolves and returns an empty 200 body at the root; no public loader, catalogue or docs.
+    - host: www.dsg-images.com
+      note: Image/asset CDN referenced by the widget and documentation markup.
+  loader_library: not published
+  integration_docs: not published
+  note: >-
+    No embed snippet, loader script URL, configuration reference or versioned component package is
+    published anywhere public. Every widget entry on the showcase page ends in "Book a call" or
+    "Contact Sales" rather than in a code sample, so the integration contract is sales-gated.
+components:
+  - family: Widgets
+    description: Drop-in visual components for embedding DSG data into an existing site.
+    items:
+      - Sports Odds
+      - Sports News
+      - Live Draw
+      - Live Draw Arabic
+      - Olympics Medals Table
+      - Olympics Games Schedule
+    source: https://datasportsgroup.com/sports-data-widgets-showcase/
+  - family: Showcases / Microsites
+    description: >-
+      Prebuilt hosted sections DSG calls "Microsite Solutions" - larger than a widget, embedded into a
+      customer platform.
+    items:
+      - name: Olympics
+        description: Real-time updates, athlete profiles, news feed, live scores, medals tables, live blog.
+      - name: Livescores
+        description: Live scores, head-to-head and coverage across 50+ sports.
+      - name: Multisports
+        description: Team and league information, player profiles, historical archive; customisable.
+      - name: US Sports
+        description: NBA, NHL, NFL, MLB, NCAA Basketball and NCAA Football scores, player and team stats.
+    source: https://datasportsgroup.com/sports-data-widgets-showcase/
+  - family: Whitelabel
+    description: >-
+      Listed as a third product alongside API and Widgets on the products page. No public
+      specification, demo or integration reference.
+    source: https://datasportsgroup.com/products-api/
+related_properties:
+  - name: Global Sports Archive
+    url: https://globalsportsarchive.com/
+    olympics_url: https://olympics.globalsportsarchive.com/
+    note: >-
+      A public, browsable site running on DSG's own data and linked from the DSG homepage. It is a
+      consumer-facing reference site, not a component or an API - it publishes no /openapi.json,
+      /llms.txt or /.well-known/ document (all 404 as of 2026-09-06). Recorded as an adjacent property
+      so that a later pass does not mistake it for an API surface.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

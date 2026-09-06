@@ -1,0 +1,64 @@
+generated: '2026-09-06'
+method: searched
+source: https://dsg-api.com/introduction/
+docs: https://dsg-api.com/introduction/
+format: http-status-codes
+rfc9457: false
+note: >-
+  DSG publishes a single "Error Codes" table on its API reference introduction, repeated at the foot of
+  every one of its 1,607 operation pages. It is a list of HTTP status codes with one-line meanings -
+  there is no application-level error code vocabulary, no problem+json media type, no error `type` URIs
+  and no per-operation error documentation. The bodies below are described, not sampled: the API is
+  credentialed, so this profile was built from published documentation only and no error response was
+  observed on the wire.
+envelope:
+  media_types:
+    - application/xml
+    - application/json
+  note: >-
+    Errors are returned in whatever format the request asked for via ftype - the docs describe the rate
+    limit response as "a xml/json message accordingly". The error body shape itself is not published.
+problems:
+  - status: 400
+    title: The request is malformed
+    remediation: Check required parameters for the operation - most operations require client, authkey
+      and an object selector (id, type, comp_id, team or season).
+    source: https://dsg-api.com/introduction/
+  - status: 401
+    title: Unauthorized
+    remediation: Verify the client and authkey query parameters. DSG's layer-2 account password and
+      layer-3 domain allowlist can also refuse an otherwise valid key.
+    source: https://dsg-api.com/introduction/
+  - status: 403
+    title: Forbidden
+    remediation: >-
+      The account is not entitled to this operation or feature. DSG surfaces this in the docs as
+      "Subscription to this function is not available for your account" and directs upgrades to
+      sales@datasportsgroup.com. Feature parameters (facts, momentum, plays) each require a separate
+      subscription.
+    source: https://dsg-api.com/introduction/
+  - status: 404
+    title: Page or resource is not found
+    remediation: Check the sport slug and operation name in the path - not every operation family is
+      documented for every sport.
+    source: https://dsg-api.com/introduction/
+  - status: 429
+    title: Too Many Requests
+    remediation: >-
+      The account exceeded the published 10,000 calls per hour threshold, which is shared across the
+      whole API. The counter resets at :00 of the next hour; the docs state the message "is gone when
+      the next hour starts". No Retry-After or RateLimit-* header is documented, so a client must wait
+      to the top of the hour or track its own budget.
+    source: https://dsg-api.com/doc/soccer/get_matches/1/
+    related: rate-limits/dsg-sports-analytics-rate-limits.yml
+  - status: 500
+    title: Server issues
+    remediation: Retry with backoff; contact DSG support if persistent.
+    source: https://dsg-api.com/introduction/
+transport_failures:
+  - condition: Connection refused
+    cause: Most likely cause is not using HTTPS.
+    source: https://dsg-api.com/introduction/
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

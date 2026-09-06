@@ -1,0 +1,39 @@
+generated: '2026-09-06'
+method: searched
+source: registry searches on npm, PyPI, RubyGems, Packagist and crates.io, 2026-09-06
+package_count: 0
+official_sdk_count: 0
+note: >-
+  No first-party client library was found in any public registry, and DSG publishes no GitHub
+  organisation. No `SDKs` pointer is emitted in apis.yml - this file records a checked absence, not an
+  unchecked one.
+packages: []
+registries_searched:
+  - {registry: npm, query: 'datasportsgroup', results: 0, endpoint: 'https://registry.npmjs.org/-/v1/search?text=datasportsgroup'}
+  - {registry: npm, query: 'dsg-api', results: 0, note: 'the term matches 675k packages by fuzzy relevance; none of the top hits is by or about Data Sports Group'}
+  - {registry: pypi, query: 'datasportsgroup', status: 404}
+  - {registry: pypi, query: 'dsg-api', status: 404}
+  - {registry: pypi, query: 'dsgapi', status: 404}
+  - {registry: packagist, query: 'datasportsgroup', results: 0}
+  - {registry: rubygems, query: 'datasportsgroup', results: 0}
+  - {registry: crates.io, query: 'datasportsgroup', results: 0}
+  - {registry: github, query: 'org:datasportsgroup / org:data-sports-group / org:dsg-api', results: 0,
+     note: 'no GitHub organisation resolves for this company under any of the obvious slugs'}
+provider_claims:
+  - claim: >-
+      "Backed with technical documentation, starter codes in various programming languages and example
+      API calls you can kickstart experiencing our data services in a short period."
+    source: https://datasportsgroup.com/products-api/
+    verification: >-
+      NOT PUBLIC. The dsg-api.com documentation navigation carries a "Packages" item, but
+      https://dsg-api.com/packages/ returns HTTP 200 whose body is byte-for-byte identical to
+      https://dsg-api.com/introduction/ (182,107 bytes) - the starter code is served only to a
+      signed-in client. The claim is recorded as made by DSG and unverifiable from outside; it is not
+      counted as a published package, and no pointer to /packages/ is emitted because an anonymous
+      reader gets a soft-404 there.
+  - claim: '"Simple Data Integration Kit"'
+    source: https://datasportsgroup.com/products-api/
+    verification: No public artifact, download or repository corresponds to this; sales-gated.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

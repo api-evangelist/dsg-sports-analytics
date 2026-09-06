@@ -1,0 +1,168 @@
+generated: '2026-09-06'
+method: searched
+source: https://dsg-api.com/introduction/
+docs:
+  - https://dsg-api.com/introduction/
+  - https://dsg-api.com/doc/soccer/get_matches/1/
+  - https://dsg-api.com/doc/soccer/get_deleted/925/
+note: >-
+  Captured from DSG's own published API reference at dsg-api.com. DSG publishes no OpenAPI, so every
+  statement here is read off a documentation page whose URL is recorded, never inferred from a spec.
+surface:
+  style: rpc-over-http
+  description: >-
+    A read-only RPC-style HTTP surface. Every documented operation is a GET whose name is a verb
+    (get_areas, get_matches, get_odds...), addressed as
+    /clients/{client_name}/{sport}/{operation}. 85 sports x 46 operation families = 1,607 documented
+    operations, all read.
+  request_url_template: https://dsg-api.com/clients/{client_name}/{sport}/{operation}
+  base_url: https://dsg-api.com
+  methods:
+    - GET
+  write_surface: false
+authentication:
+  style: api-key-in-query
+  parameters:
+    - client
+    - authkey
+  detail: authentication/dsg-sports-analytics-authentication.yml
+versioning:
+  scheme: document-level
+  current: '3.0'
+  docs: https://dsg-api.com/introduction/
+  in_url: false
+  note: >-
+    The API version is declared on the documentation ("The current API version is 3.0") and echoed in
+    every response inside the <datasportsgroup> node as a `version` field. It is NOT in the request
+    path or a header - the same URL returns whatever version the account is provisioned for. Individual
+    operations carry their own version badge in the docs (get_matches is marked v3, get_news_rss is
+    marked v2), so the surface is not uniformly on one version.
+  response_field: datasportsgroup/version
+content_negotiation:
+  default_format: xml
+  alternate_formats:
+    - json
+    - json_array
+  mechanism: query-parameter
+  parameter: ftype
+  values:
+    - ftype=json
+    - ftype=json_array
+  note: >-
+    Format is selected with a query parameter, not an Accept header. XML is the default; a client that
+    sends no ftype gets XML.
+localization:
+  parameter: lang
+  default: en
+  format: two-character language code
+  note: DSG's marketing states 20+ languages are supported; the docs host itself ships EN/DE/RU/AR.
+time:
+  default_timezone: CET
+  utc_fields_suffix: _utc
+  note: >-
+    "All times and dates are returned in CET timezone except attributes named _utc or a different
+    timezone set in the parameters." Response payloads carry both (e.g. match.date and match.date_utc)
+    and the envelope carries generated_utc.
+  generated_timestamp_field: datasportsgroup/generated_utc
+pagination:
+  supported: false
+  note: >-
+    No pagination is documented anywhere in the reference. Result sets are scoped by required
+    selector parameters instead (type + id, comp_id, team, season) rather than by page/cursor. There
+    are no page, offset, limit or cursor parameters on any doc page examined.
+delta_sync:
+  supported: true
+  mechanism: dedicated polling operations
+  operations:
+    - name: get_matches_updates
+      documented_on: 52 sports
+      purpose: matches changed since a point in time
+    - name: get_peoples_updates
+      documented_on: 84 sports
+      purpose: people records changed since a point in time
+    - name: get_deleted
+      documented_on: 84 sports
+      purpose: rounds, teams, players and matches that were deleted
+      parameter: intv
+      window: interval in minutes, maximum 3600
+  timestamp_parameter: timestamp
+  timestamp_format: 'yyyy-mm-dd hh:mm:ss'
+  note: >-
+    This is the closest thing DSG publishes to an event surface. It is pull-only - the client polls a
+    delta operation on an interval. There are no webhooks and no streaming endpoint in the published
+    reference.
+sparse_fields:
+  supported: true
+  mechanism: node suppression
+  parameter: node_hide
+  description: >-
+    Documented as "list node names you want to hide" - the client removes branches from the response
+    rather than selecting them.
+  note: >-
+    This is subtractive, not additive - there is no documented way to request only a named subset.
+    Some sports also expose picsize to select an image dimension (200x200, 100x100, 50x50, 30x30,
+    18x18) rather than returning every size.
+feature_flags:
+  mechanism: query parameters gated on subscription
+  parameters:
+    - name: facts
+      values: ['yes']
+      note: enables match facts - "Separate subscription is needed"
+    - name: momentum
+      values: ['yes']
+      note: enables momentum graphic values - "Separate subscription is needed"
+    - name: plays
+      values: ['yes']
+      note: enables auto-text-commentary - "Separate subscription is needed"
+  note: >-
+    Entitlement is per-operation and per-feature. Documentation pages for operations outside an
+    account's subscription render the banner "Subscription to this function is not available for your
+    account." while still publishing the full parameter and node reference, which is why this profile
+    could be built anonymously.
+request_tracing:
+  request_id_header: null
+  supported: false
+  note: No correlation/request-id header is documented.
+error_envelope:
+  format: http-status-plus-body
+  rfc9457: false
+  content_type_problem_json: false
+  detail: errors/dsg-sports-analytics-problem-types.yml
+  note: >-
+    Errors are signalled with HTTP status codes documented in a table on the introduction page. Rate
+    limit exhaustion is additionally described as returning "an xml/json message accordingly", i.e. the
+    error body is rendered in the same format the request asked for. No problem+json, no machine
+    error-code vocabulary is published.
+rate_limit_signaling:
+  headers: []
+  status_code: 429
+  detail: rate-limits/dsg-sports-analytics-rate-limits.yml
+  note: >-
+    A 429 is documented ("Too Many Requests") and a numeric threshold is published on every operation
+    page, but NO RateLimit-* or X-RateLimit-* response headers are documented. An agent cannot read its
+    remaining budget from a response; it can only count its own calls against the published 10,000/hour
+    ceiling and watch for the in-band exhaustion message.
+idempotency:
+  coverage: na
+  supported: false
+  header: null
+  scope: []
+  note: >-
+    na, not none: the published surface is entirely read-only. All 1,607 documented operations are GET
+    verbs that return data (get_*); the reference documents no create, update or delete operation, so
+    there is no mutating request that replay protection could apply to. Recording `none` here would
+    imply DSG failed to ship a mechanism it needs.
+reversibility:
+  grade: na
+  applicable: false
+  write_surfaces: []
+  note: >-
+    na - no write surface exists. There is nothing an agent can do through this API that would need to
+    be taken back. (get_deleted is a read of DSG's own deletions, not a client-initiated delete.) No
+    reversal window is asserted here because none is published and none is needed.
+dry_run_mode:
+  supported: na
+  note: na - read-only surface; every call is already side-effect free.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

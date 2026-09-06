@@ -4,90 +4,73 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: DSG Sports Analytics
 providerId: dsg-sports-analytics
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-06'
+generated: '2026-09-06'
+method: searched
+source: https://dsg-api.com/doc/soccer/get_matches/1/
+docs: https://dsg-api.com/doc/soccer/get_matches/1/
+limit_count: 1
+note: >-
+  REPLACES a scaffold. Until 2026-09-06 this file carried invented per-tier limits (10/min free,
+  100/min professional, 1000/min enterprise) and a full set of X-RateLimit-* headers, none of which
+  DSG publishes. DSG publishes exactly ONE limit, and it is account-wide rather than per-tier: an
+  "API Threshold" block repeated verbatim on every operation documentation page. The scaffold values
+  have been removed rather than kept alongside the real one.
 tags:
-  - Analysis
-  - Insights
-  - Sports
   - Sports Data
-  - Live Scores
-  - Statistics
   - Rate Limiting
   - Quotas
   - Throttling
-description: Machine-readable rate limit definitions for the DSG Sports Analytics API surface. Captures
-  per-tier quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values
-  to be replaced with published provider limits.
+description: >-
+  Published rate limiting for the DSG Sports Data API, read from the "API Threshold" block DSG repeats
+  on each of its 1,607 operation documentation pages.
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+  note: >-
+    No rate-limit response headers are documented. This is the operationally important finding: an
+    agent calling this API cannot read its remaining budget from any response. It must count its own
+    calls against the published ceiling and detect exhaustion from an in-band error message.
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+  note: >-
+    429 "Too Many Requests" is listed in the introduction's error-code table. The operation pages
+    additionally state that on exhaustion "you will get a xml/json message accordingly", i.e. an error
+    document in the negotiated format.
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
+  - name: API Threshold
+    scope: account
+    metric: requests_per_hour
+    limit: 10000
+    timeFrame: hour
+    equivalent_rate: 2.78 calls per second
+    burst: null
     applies:
       - DSG Sports Data API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - DSG Sports Data API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - DSG Sports Data API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - DSG Sports Data API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - DSG Sports Data API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    applies_to: >-
+      ALL calls across the API - the threshold is not per endpoint, per sport or per tier. DSG's
+      wording: "This threshold applies to ALL your calls you do across the API."
+    reset:
+      style: fixed-window
+      boundary: top of each clock hour (:00)
+      note: >-
+        "Your number of calls get reset every hour at :00" - a fixed hourly window, not a sliding one.
+        A client that exhausts the budget at :05 waits 55 minutes; there is no partial recovery.
+    source: https://dsg-api.com/doc/soccer/get_matches/1/
+    verified_on:
+      - https://dsg-api.com/doc/soccer/get_areas/3/
+      - https://dsg-api.com/doc/soccer/get_deleted/925/
+      - https://dsg-api.com/doc/soccer/get_news_rss/743/
+tiering:
+  published: false
+  note: >-
+    No per-plan rate limits are published. DSG differentiates accounts by ENTITLEMENT (which sports,
+    competitions and feature parameters an account may call) rather than by a published rate ceiling -
+    see plans/dsg-sports-analytics-plans-pricing.yml. Whether the 10,000/hour threshold is negotiable
+    on a contract is not stated anywhere public.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
