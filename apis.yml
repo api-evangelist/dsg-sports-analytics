@@ -92,6 +92,8 @@ apis:
       get_matches, get_tables, get_teams, get_peoples, get_news, get_odds) and
       responses are available in JSON and XML.
 common:
+  - type: FinOps
+    url: finops/dsg-sports-analytics-finops.yml
   - type: DomainSecurity
     url: security/dsg-sports-analytics-domain-security.yml
   - type: LinkedIn
